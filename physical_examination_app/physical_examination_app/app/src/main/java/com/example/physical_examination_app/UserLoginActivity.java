@@ -93,6 +93,7 @@ public class UserLoginActivity extends AppCompatActivity {
     private void getViews() {
         userName = findViewById(R.id.user_name);
         userPassword = findViewById(R.id.user_password);
+        userImage = findViewById(R.id.user_image);
     }
 
     //修改状态栏的状态
