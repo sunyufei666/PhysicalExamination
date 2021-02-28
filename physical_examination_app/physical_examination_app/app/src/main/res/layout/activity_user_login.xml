@@ -17,11 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@+id/user_image"
+            android:id="@+id/user_image"
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_marginBottom="30dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@mipmap/student_login"/>
         <LinearLayout
             android:background="@drawable/login_edit_text"
             android:orientation="vertical"
@@ -54,7 +55,7 @@
         </LinearLayout>
         <Button
             android:layout_marginTop="30dp"
-            android:id="@+id/admin_login_button"
+            android:id="@+id/login_button"
             style="?android:attr/borderlessButtonStyle"
             android:background="@drawable/login_manager_button"
             android:layout_weight="2"

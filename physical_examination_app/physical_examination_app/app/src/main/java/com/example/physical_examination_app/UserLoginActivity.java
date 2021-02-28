@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -24,11 +26,12 @@ public class UserLoginActivity extends AppCompatActivity {
     private EditText userName;
     private EditText userPassword;
     private ImageView userImage;
+    private Button loginButton;
 
     private Handler loginHandler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
-            String result = msg + "";
+            String result = msg.obj + "";
             if(result.equals("success")){
                 Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
@@ -69,19 +72,25 @@ public class UserLoginActivity extends AppCompatActivity {
             hintString = new SpannableString("学号");
             //动态设置输入框上的图片
             userImage.setImageResource(R.mipmap.student_login);
-            //创建线程访问后台，返回登录结果
-            new Thread(){
+
+            loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void run() {
-                    String result = new Utils().getConnectionResult("loginController","userLogin",
-                            "username="+userName.getText().toString()+
-                                    "&&password="+userPassword.getText().toString()+
-                                    "&&role="+role);
-                    Message message = new Message();
-                    message.obj = result;
-                    loginHandler.sendMessage(message);
+                public void onClick(View v) {
+                    //创建线程访问后台，返回登录结果
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            String result = new Utils().getConnectionResult("loginController","userLogin",
+                                    "username="+userName.getText().toString()+
+                                            "&&password="+userPassword.getText().toString()+
+                                            "&&role="+role);
+                            Message message = new Message();
+                            message.obj = result;
+                            loginHandler.sendMessage(message);
+                        }
+                    }.start();
                 }
-            }.start();
+            });
 
         }else if(role.equals("admin")){
             hintString = new SpannableString("账号");
@@ -94,6 +103,7 @@ public class UserLoginActivity extends AppCompatActivity {
         userName = findViewById(R.id.user_name);
         userPassword = findViewById(R.id.user_password);
         userImage = findViewById(R.id.user_image);
+        loginButton = findViewById(R.id.login_button);
     }
 
     //修改状态栏的状态

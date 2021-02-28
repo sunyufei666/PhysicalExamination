@@ -24,7 +24,7 @@ public class Utils {
 
     private String result;
     private Bitmap bitmapResult;
-    public static final String ip = "10.7.89.223";
+    public static final String ip = "192.168.5.7";
     public static final String project = "physical_examination";
 
     //不需要参数的数据传输
@@ -51,7 +51,7 @@ public class Utils {
     //需要参数的数据传输
     public String getConnectionResult(String controller, String method, String params){
         try {
-            URL url = new URL("http://"+ip+":8080/"+project+"/"+controller+"/"+method+"/?"+params);
+            URL url = new URL("http://"+ip+":8080/"+project+"/"+controller+"/"+method+"?"+params);
             URLConnection conn = url.openConnection();
             InputStream in = conn.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
