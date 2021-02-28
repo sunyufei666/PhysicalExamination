@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.service.LoginService;
 
 @RestController
-@RequestMapping(value="/LoginServlet")
+@RequestMapping(value="/loginController")
 public class LoginController {
 
 	@Resource
@@ -19,7 +19,7 @@ public class LoginController {
 	@RequestMapping(value="/userLogin",produces="text/html;charset=UTF-8")
 	public String account(@RequestParam("username") String stu_number,@RequestParam("password") String stu_password,
 			@RequestParam(value="role",required=false) String role) {
-		System.out.println(stu_number+stu_password+role);
+		System.out.println("登录的账号："+stu_number+"密码："+stu_password+"身份："+role);
 		return this.loginService.login(stu_number, stu_password,role);
 	}
 }

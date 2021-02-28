@@ -21,7 +21,7 @@ public class Examination {
 	private float test_four;
 	private float test_five;
 	private int test_six;
-	private int ttest_seven;
+	private int test_seven;
 	private float grade;
 	private short result;
 	public int getId() {
@@ -78,11 +78,11 @@ public class Examination {
 	public void setTest_six(int test_six) {
 		this.test_six = test_six;
 	}
-	public int getTtest_seven() {
-		return ttest_seven;
+	public int getTest_seven() {
+		return test_seven;
 	}
-	public void setTtest_seven(int ttest_seven) {
-		this.ttest_seven = ttest_seven;
+	public void setTest_seven(int test_seven) {
+		this.test_seven = test_seven;
 	}
 	public float getGrade() {
 		return grade;
@@ -100,7 +100,7 @@ public class Examination {
 	public String toString() {
 		return "Examination [id=" + id + ", stu_number=" + stu_number + ", stu_name=" + stu_name + ", test_one="
 				+ test_one + ", test_two=" + test_two + ", test_three=" + test_three + ", test_four=" + test_four
-				+ ", test_five=" + test_five + ", test_six=" + test_six + ", ttest_seven=" + ttest_seven + ", grade="
+				+ ", test_five=" + test_five + ", test_six=" + test_six + ", test_seven=" + test_seven + ", grade="
 				+ grade + ", result=" + result + "]";
 	}
 	
