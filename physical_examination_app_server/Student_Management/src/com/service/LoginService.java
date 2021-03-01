@@ -18,4 +18,10 @@ public class LoginService {
 		return this.loginDao.login(stu_number, stu_password,role);
 		
 	}
+	public String editpassword(String stu_number,String stu_password) {
+		return this.loginDao.editpassword(stu_number, stu_password);
+	}
+	public String matchpassword(String stu_number,String stu_password) {
+		return this.loginDao.matchpassword(stu_number, stu_password);
+	}
 }

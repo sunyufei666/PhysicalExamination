@@ -1,5 +1,8 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.hibernate.Query;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.entity.Admin;
 import com.entity.Student;
+import com.google.gson.Gson;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 @Repository
@@ -30,11 +34,12 @@ public class LoginDao {
 			Query query=session.createQuery("from Student where stu_number=?");
 			query.setParameter(0, stu_number);
 			Student student=(Student) query.uniqueResult();
+			List<Map> students=(List<Map>) query.list();
 			if(student!=null) {
 				if (stu_password.equals(student.getStu_password())) {
 					System.out.println("密码一致");
 					System.out.println();
-					return "success";
+					return new Gson().toJson(students);
 				}else {
 					System.out.println("密码不一致");
 					return "fail";
@@ -49,11 +54,12 @@ public class LoginDao {
 			Query query=session.createQuery("from Admin where admin_number=?");
 			query.setParameter(0, stu_number);
 			Admin admin=(Admin) query.uniqueResult();
+			List<Map> admins=(List<Map>)query.list();
 			if(admin!=null) {
 				if (stu_password.equals(admin.getAdmin_password())) {
 					System.out.println("密码一致");
 					System.out.println();
-					return "success";
+					return new Gson().toJson(admins);
 				}else {
 					System.out.println("密码不一致");
 					return "fail";
@@ -67,5 +73,30 @@ public class LoginDao {
 		return "";
 		
 		}
+	public String editpassword(String stu_number,String stu_password) {
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Student where stu_number=?");
+		query.setParameter(0, stu_number);
+		Student student=(Student) query.uniqueResult();
+		student.setStu_password(stu_password);
+		session.save(student);
+		System.out.println("用户："+stu_number+"修改密码成功,修改后的密码为"+stu_password);
+		return "success";
+	}
 	
+	public String matchpassword(String stu_number,String stu_password) {
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Student where stu_number=?");
+		query.setParameter(0, stu_number);
+		Student student=(Student) query.uniqueResult();
+		if(student.getStu_password().equals(stu_password)) {
+			System.out.println("账号"+stu_number+"输入的密码一致");
+			return "success";
+		}else {
+			System.out.println("账号"+stu_number+"输入的密码不一致");
+			return "fail";
+		}
+		
+		
+	}
 }

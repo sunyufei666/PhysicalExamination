@@ -15,6 +15,14 @@ public class Student {
 	private int id;
 	private String stu_number;
 	private String stu_password;
+	private String stu_name;
+	private String stu_class;
+	private String sex;
+	private String department;
+	private String major;
+	private String address;
+	private String photo;
+	private String school;
 	public int getId() {
 		return id;
 	}
@@ -34,10 +42,61 @@ public class Student {
 	public void setStu_password(String stu_password) {
 		this.stu_password = stu_password;
 	}
+	public String getStu_name() {
+		return stu_name;
+	}
+	public void setStu_name(String stu_name) {
+		this.stu_name = stu_name;
+	}
+	public String getStu_class() {
+		return stu_class;
+	}
+	public void setStu_class(String stu_class) {
+		this.stu_class = stu_class;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public String getSchool() {
+		return school;
+	}
+	public void setSchool(String school) {
+		this.school = school;
+	}
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", stu_number=" + stu_number + ", stu_password=" + stu_password + "]";
+		return "Student [id=" + id + ", stu_number=" + stu_number + ", stu_password=" + stu_password + ", stu_name="
+				+ stu_name + ", stu_class=" + stu_class + ", sex=" + sex + ", department=" + department + ", major="
+				+ major + ", address=" + address + ", photo=" + photo + ", school=" + school + "]";
 	}
+	
 	
 	
 }

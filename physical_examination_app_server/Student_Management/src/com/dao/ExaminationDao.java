@@ -33,4 +33,12 @@ public class ExaminationDao {
 		else return new Gson().toJson(examinations);
 		
 	}
+	public String insertGrade(String user_number) {
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Examination where stu_number=?");
+		query.setParameter(0, user_number);
+		Examination examination=(Examination) query.uniqueResult();
+		//examination;
+		return "";
+	}
 }

@@ -22,4 +22,16 @@ public class LoginController {
 		System.out.println("登录的账号："+stu_number+"密码："+stu_password+"身份："+role);
 		return this.loginService.login(stu_number, stu_password,role);
 	}
+	
+	@RequestMapping(value="/editpassword",produces="text/html;charset=UTF-8")
+	public String editpassword(@RequestParam("username") String stu_number,@RequestParam("password") String stu_password) {
+		System.out.println("登录的账号："+stu_number+"要更改的密码："+stu_password);
+		return this.loginService.editpassword(stu_number, stu_password);
+	}
+	
+	@RequestMapping(value="/matchpassword",produces="text/html;charset=UTF-8")
+	public String matchpassword(@RequestParam("username") String stu_number,@RequestParam("password") String stu_password) {
+		System.out.println("登录的账号："+stu_number+"要对比的密码："+stu_password);
+		return this.loginService.matchpassword(stu_number, stu_password);
+	}
 }

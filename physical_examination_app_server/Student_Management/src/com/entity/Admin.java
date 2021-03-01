@@ -14,6 +14,8 @@ public class Admin {
 	private int id;
 	private String admin_number;
 	private String admin_password;
+	private String admin_name;
+	private String photo;
 	public int getId() {
 		return id;
 	}
@@ -32,9 +34,22 @@ public class Admin {
 	public void setAdmin_password(String admin_password) {
 		this.admin_password = admin_password;
 	}
+	public String getAdmin_name() {
+		return admin_name;
+	}
+	public void setAdmin_name(String admin_name) {
+		this.admin_name = admin_name;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 	@Override
 	public String toString() {
-		return "Admin [id=" + id + ", admin_number=" + admin_number + ", admin_password=" + admin_password + "]";
+		return "Admin [id=" + id + ", admin_number=" + admin_number + ", admin_password=" + admin_password
+				+ ", admin_name=" + admin_name + ", photo=" + photo + "]";
 	}
 	
 }
