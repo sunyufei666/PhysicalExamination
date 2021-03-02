@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.physical_examination_app.student.StudentActivity;
+
 public class LoginActivity extends AppCompatActivity {
 
     private Button studentLoginButton;
@@ -30,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), UserLoginActivity.class);
+                intent.setClass(getApplicationContext(), StudentActivity.class);
                 intent.setAction("student");
                 startActivity(intent);
             }

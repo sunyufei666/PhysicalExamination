@@ -57,7 +57,7 @@
             android:layout_marginTop="30dp"
             android:id="@+id/login_button"
             style="?android:attr/borderlessButtonStyle"
-            android:background="@drawable/login_manager_button"
+            android:background="@drawable/blue_corner_button"
             android:layout_weight="2"
             android:layout_width="100dp"
             android:layout_height="50dp"
