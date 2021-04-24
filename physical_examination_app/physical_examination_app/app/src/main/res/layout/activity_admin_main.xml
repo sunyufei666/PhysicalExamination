@@ -1,0 +1,97 @@
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tabs"/>
+
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:background="#cdcdcd"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"/>
+
+    <LinearLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/manage_exam_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:id="@+id/manage_exam_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/manage_exam_blue"/>
+
+            <TextView
+                android:id="@+id/manage_exam_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#06c8fb"
+                android:text="管理考试"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/manage_student_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:id="@+id/manage_student_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/student_grey"/>
+
+            <TextView
+                android:id="@+id/manage_student_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="管理学生" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/manager_myself_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:id="@+id/manager_myself_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/myself_grey"/>
+
+            <TextView
+                android:id="@+id/manager_myself_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人信息"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
