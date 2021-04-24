@@ -1,9 +1,10 @@
-package com.example.physical_examination_app;
+package com.example.physical_examination_app.common;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,8 +18,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.physical_examination_app.admin.AdminActivity;
-import com.example.physical_examination_app.student.StudentActivity;
+import com.example.physical_examination_app.Admin.AdminMainActivity;
+import com.example.physical_examination_app.R;
+import com.example.physical_examination_app.Student.StudentMainActivity;
+import com.example.physical_examination_app.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class UserLoginActivity extends AppCompatActivity {
 
@@ -32,18 +43,43 @@ public class UserLoginActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             String result = msg.obj + "";
-            if(result.equals("success")){
-                Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                if(role.equals("student")){
-                    intent.setClass(getApplicationContext(),StudentActivity.class);
-                    startActivity(intent);
-                }else if(role.equals("admin")){
-                    intent.setClass(getApplicationContext(), AdminActivity.class);
-                    startActivity(intent);
-                }
-            }else if(result.equals("fail")){
+            if(result.equals("fail") || result==null){
                 Toast.makeText(getApplicationContext(),"登录失败，请输入正确的信息！",Toast.LENGTH_SHORT).show();
+            }else{
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    JSONObject json = jsonArray.getJSONObject(0);
+                    SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pre.edit();
+                    Intent intent = new Intent();
+                    Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
+                    if(role.equals("student")){
+                        editor.putString("id",json.getString("id"));
+                        editor.putString("sno",json.getString("sno"));
+                        editor.putString("nickname",json.getString("nickname"));
+                        editor.putString("sex",json.getString("sex"));
+                        editor.putString("university",json.getString("university"));
+                        editor.putString("college",json.getString("college"));
+                        editor.putString("name",json.getString("name"));
+                        editor.putString("grade",json.getString("grade"));
+                        editor.putString("classes",json.getString("classes"));
+                        editor.putString("introduction",json.getString("introduction"));
+                        editor.putString("major",json.getString("major"));
+                        editor.putString("register_time",json.getString("register_time"));
+                        editor.putString("login_role","student");
+                        editor.commit();
+                        intent.setClass(getApplicationContext(), StudentMainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else if(role.equals("admin")){
+                        intent.setClass(getApplicationContext(), AdminMainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     };
@@ -80,10 +116,18 @@ public class UserLoginActivity extends AppCompatActivity {
                     new Thread(){
                         @Override
                         public void run() {
+                            String md5Password = null;
+                            try {
+                                MessageDigest md = MessageDigest.getInstance("MD5");
+                                md.update(userPassword.getText().toString().getBytes());
+                                md5Password = new BigInteger(1, md.digest()).toString(16);
+                            } catch (NoSuchAlgorithmException e) {
+                                e.printStackTrace();
+                            }
+
                             String result = new Utils().getConnectionResult("loginController","userLogin",
-                                    "username="+userName.getText().toString()+
-                                            "&&password="+userPassword.getText().toString()+
-                                            "&&role="+role);
+                                    "username=" + userName.getText().toString() +
+                                            "&&password=" + md5Password + "&&role="+role);
                             Message message = new Message();
                             message.obj = result;
                             loginHandler.sendMessage(message);

@@ -7,23 +7,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:paddingTop="25dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="#ffffff"
+        android:background="#06c8fb"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="100dp">
         <ImageView
             android:id="@+id/icon_back"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/icon_back"/>
+            android:src="@drawable/arrow_left"/>
         <TextView
             android:gravity="center"
-            android:textSize="23dp"
-            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
             android:text="头像"
             android:textStyle="bold"
             android:layout_weight="5"
@@ -35,18 +35,17 @@
             android:gravity="right"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/album"
+            android:layout_height="25dp"
+            android:src="@mipmap/icon_album"
             android:layout_marginRight="10dp" />
-
     </LinearLayout>
 
     <LinearLayout
         android:gravity="center"
-        android:layout_marginTop="100dp"
-        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
         android:layout_width="match_parent"
         android:layout_height="380dp">
+
         <com.example.physical_examination_app.RoundImageView
             android:id="@+id/user_avatar"
             android:layout_width="400dp"

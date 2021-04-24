@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">学生体测管理系统</string>
-    <string name="ip_address">1.1.1.1</string>
+    <string name="ip_address">192.168.137.1</string>
+    <string-array name="exam_type">
+        <item>按场地</item>
+        <item>按时间</item>
+        <item>完成度</item>
+    </string-array>
+    <string-array name="grade_type">
+        <item>按场地</item>
+        <item>是否通过</item>
+        <item>通过时间</item>
+    </string-array>
+    <string-array name="exam_ground">
+        <item>西操场</item>
+        <item>东操场</item>
+    </string-array>
 </resources>

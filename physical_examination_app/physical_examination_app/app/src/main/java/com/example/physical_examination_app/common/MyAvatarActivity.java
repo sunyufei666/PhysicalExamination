@@ -1,4 +1,4 @@
-package com.example.physical_examination_app;
+package com.example.physical_examination_app.common;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.example.physical_examination_app.R;
 
 public class MyAvatarActivity extends AppCompatActivity {
 

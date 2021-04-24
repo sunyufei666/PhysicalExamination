@@ -12,13 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MyAvatarActivity"></activity>
-        <activity android:name=".admin.AdminActivity" />
-        <activity android:name=".student.StudentActivity" />
-        <activity android:name=".UserLoginActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".Student.MyNewsActivity"></activity>
+        <activity android:name=".common.InfoEditActivity" />
+        <activity android:name=".Student.GradeDetailActivity" />
+        <activity android:name=".Student.ExamDetailActivity" />
+        <activity android:name=".Admin.StudentEditActivity" />
+        <activity android:name=".Admin.ExamEditActivity" />
+        <activity android:name=".common.SettingActivity" />
+        <activity android:name=".Student.StudentMainActivity" />
+        <activity android:name=".Admin.AdminMainActivity" />
+        <activity android:name=".Student.ReserveExamActivity" />
+        <activity android:name=".Student.MyDetailActivity" />
+        <activity android:name=".common.MyAvatarActivity" />
+        <activity android:name=".common.UserLoginActivity" />
+        <activity android:name=".common.LoginActivity" />
+        <activity android:name=".common.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

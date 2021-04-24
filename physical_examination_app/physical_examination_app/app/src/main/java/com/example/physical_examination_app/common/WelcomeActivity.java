@@ -1,4 +1,4 @@
-package com.example.physical_examination_app;
+package com.example.physical_examination_app.common;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.example.physical_examination_app.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 
