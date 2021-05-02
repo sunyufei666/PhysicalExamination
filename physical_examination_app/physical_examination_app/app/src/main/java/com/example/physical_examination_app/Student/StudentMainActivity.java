@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -18,11 +17,12 @@ import android.widget.TextView;
 import com.example.physical_examination_app.R;
 import com.example.physical_examination_app.Student.StudentFragment.ExamFragment;
 import com.example.physical_examination_app.Student.StudentFragment.GradeFragment;
-import com.example.physical_examination_app.common.ActivityCollector;
+import com.example.physical_examination_app.ActivityCollector;
+import com.example.physical_examination_app.Utils;
 import com.example.physical_examination_app.common.MyselfFragment;
 import com.example.physical_examination_app.common.FragmentAdapter;
-import com.example.physical_examination_app.common.UserLoginActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -183,6 +183,23 @@ public class StudentMainActivity extends AppCompatActivity {
         gradeText.setTextColor(Color.parseColor(tab2Color));
         myselfText.setTextColor(Color.parseColor(tab3Color));
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        String avatarName = null;
+        SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+
+        if(pre.getString("login_role","").equals("student")){
+            avatarName = pre.getString("sno","");
+        }else avatarName = pre.getString("ano","");
+        File file = new File(getFilesDir().getAbsolutePath() + "/avatar/" + avatarName +".jpg");
+        file.delete();
+
+        SharedPreferences.Editor editor = pre.edit();
+        editor.clear();
+        editor.commit();
     }
 
 }

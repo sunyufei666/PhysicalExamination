@@ -1,4 +1,4 @@
-package com.example.physical_examination_app.common;
+package com.example.physical_examination_app;
 
 import android.app.Activity;
 

@@ -8,23 +8,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.physical_examination_app.R;
-import com.example.physical_examination_app.Student.ExamDetailActivity;
+import com.example.physical_examination_app.common.ExamDetailActivity;
 import com.example.physical_examination_app.Student.StudentAdapter.MyExamAdapter;
 import com.example.physical_examination_app.Utils;
 
@@ -41,7 +38,7 @@ public class ExamFragment extends Fragment {
 
     private EditText examSearch;
     private Spinner searchSpinner;
-    private int spinnerPosition;
+    private String type;
 
     private List<Map<String,String>> dataSource;
     private ListView myExamList;
@@ -53,17 +50,30 @@ public class ExamFragment extends Fragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             String result = msg.obj + "";
-//            try {
-//                JSONArray jsonArrayAll = new JSONArray(result);
-//                dataSource = new ArrayList<>();
-//                for (int i = 0;i<jsonArrayAll.length();i++){
-//                    JSONObject jsonObject = new JSONArray(jsonArrayAll.getString(i)).getJSONObject(1);
-//                    Log.e("sadsadsadsadasd",jsonObject.toString());
-//                }
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                JSONArray jsonArrayAll = new JSONArray(result);
+                dataSource = new ArrayList<>();
+                for (int i = 0;i<jsonArrayAll.length();i++){
+                    JSONObject jsonObject = new JSONArray(jsonArrayAll.getString(i)).getJSONObject(1);
+                    JSONObject jsonObject1 = new JSONArray(jsonArrayAll.getString(i)).getJSONObject(0);
+                    Map<String, String> item = new HashMap<>();
+                    item.put("location",jsonObject.getString("place"));
+                    item.put("teacher",jsonObject.getString("teacher"));
+                    item.put("people",jsonObject.getString("current_people")+"/"+jsonObject.getString("all_people"));
+                    item.put("event",jsonObject.getString("item"));
+                    item.put("status",jsonObject1.getString("if_complete"));
+                    item.put("release_date",jsonObject.getString("public_date"));
+                    item.put("date",jsonObject.getString("exam_date"));
+                    dataSource.add(item);
+                }
+
+                myExamAdapter = new MyExamAdapter(getContext(),dataSource,R.layout.my_exam_item);
+                myExamAdapter.notifyDataSetChanged();
+                myExamList.setAdapter(myExamAdapter);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     };
 
@@ -74,7 +84,7 @@ public class ExamFragment extends Fragment {
 
         getViews(view);
 
-        setListView();
+        setListView("getStudentExamInfo","");
         setListener();
 
         return view;
@@ -84,13 +94,13 @@ public class ExamFragment extends Fragment {
     private void setListener() {
 
         myExamList.setOnItemClickListener(customListener);
-        examSearch.addTextChangedListener(customListener);
         searchSpinner.setOnItemSelectedListener(customListener);
+        examSearch.addTextChangedListener(customListener);
 
     }
 
     //为ListView准备
-    private void setListView() {
+    private void setListView(String method, String param) {
 
         SharedPreferences pre = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 
@@ -98,27 +108,12 @@ public class ExamFragment extends Fragment {
         new Thread(){
             @Override
             public void run() {
-                String result = new Utils().getConnectionResult("studentExamController","getStudentExamInfo","id="+pre.getString("id",""));
+                String result = new Utils().getConnectionResult("studentExamController",method,"id="+pre.getString("id","")+param);
                 Message message = new Message();
                 message.obj = result;
                 userExamHandler.sendMessage(message);
-
             }
         }.start();
-
-        dataSource = new ArrayList<>();
-        for (int i = 0;i<5;i++){
-            Map<String, String> item = new HashMap<>();
-            item.put("location","西操场");
-            item.put("people","50/80");
-            item.put("event","立定跳远、50米跑、坐位体前屈（男）......");
-            item.put("status","未满");
-            item.put("date","2020年11月11日");
-            dataSource.add(item);
-        }
-
-        myExamAdapter = new MyExamAdapter(getContext(),dataSource,R.layout.my_exam_item);
-        myExamList.setAdapter(myExamAdapter);
 
     }
 
@@ -143,7 +138,8 @@ public class ExamFragment extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+            String param = "&&" + "type=" + type + "&&" + "value=" + examSearch.getText().toString();
+            setListView("getStudentExamInfoByType",param);
         }
 
         @Override
@@ -158,18 +154,32 @@ public class ExamFragment extends Fragment {
             Intent intent = new Intent();
             intent.setClass(getContext(), ExamDetailActivity.class);
             intent.putExtra("location",item.get("location"));
+            intent.putExtra("teacher",item.get("teacher"));
             intent.putExtra("people",item.get("people"));
             intent.putExtra("event",item.get("event"));
             intent.putExtra("status",item.get("status"));
             intent.putExtra("date",item.get("date"));
+            intent.putExtra("release_date",item.get("release_date"));
+            intent.setAction("考试详情");
             startActivity(intent);
-
         }
 
         //spinner接口里的方法实现
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            spinnerPosition = position;
+            switch (position){
+                case 0:
+                    type = "place";
+                    break;
+                case 1:
+                    type = "if_complete";
+                    break;
+                case 2:
+                    type = "exam_date";
+                    break;
+            }
+            String param = "&&" + "type=" + type + "&&" + "value=" + examSearch.getText().toString();
+            setListView("getStudentExamInfoByType",param);
         }
 
         @Override

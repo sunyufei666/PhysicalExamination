@@ -56,12 +56,14 @@ public class MyExamAdapter extends BaseAdapter {
 
         getViews(convertView);
         Map<String, String> item = dataSource.get(position);
+
         String location = item.get("location");
+
         examLocation.setText(item.get("location"));
         examPeople.setText("人数："+item.get("people"));
-        examEvent.setText("项目："+item.get("event"));
+        examEvent.setText("项目："+item.get("event").substring(0,30)+"......");
         examStatus.setText(item.get("status"));
-        examDate.setText("考试日期："+item.get("date"));
+        examDate.setText("发布日期："+item.get("date"));
         if(location.equals("东操场")){
             examBackground.setBackground(context.getResources().getDrawable(R.drawable.ground2));
         }

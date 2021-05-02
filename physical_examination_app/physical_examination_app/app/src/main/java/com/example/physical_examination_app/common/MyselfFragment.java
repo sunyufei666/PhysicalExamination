@@ -1,12 +1,12 @@
 package com.example.physical_examination_app.common;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,11 +19,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.physical_examination_app.Student.MyDetailActivity;
-import com.example.physical_examination_app.common.MyAvatarActivity;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.physical_examination_app.Admin.ManageGradeActivity;
+import com.example.physical_examination_app.Admin.ManageNewsActivity;
 import com.example.physical_examination_app.R;
-import com.example.physical_examination_app.common.SettingActivity;
+import com.example.physical_examination_app.Student.ReserveExamActivity;
+import com.example.physical_examination_app.Utils;
 import com.google.android.material.appbar.AppBarLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -50,6 +58,21 @@ public class MyselfFragment extends Fragment {
 
     private CustomListener customListener = new CustomListener();
 
+    private Handler proverbHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            String result = msg.obj + "";
+            try {
+                JSONObject json = new JSONObject(result);
+                proverbText.setText("      “" + json.getString("content") + "”");
+                proverbAuthor.setText("————  " + json.getString("author"));
+                proverbTextBottom.setText("      “" + json.getString("content") + "”");
+                proverbAuthorBottom.setText("————  " + json.getString("author"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
 
     @Nullable
@@ -58,11 +81,30 @@ public class MyselfFragment extends Fragment {
         View view = inflater.inflate(R.layout.myself_fragment,container,false);
 
         getViews(view);
+
+        getAvatar();
+
         otherOperating();
         setListener();
 
 
         return view;
+    }
+
+    //从后台获取头像
+    private void getAvatar() {
+
+        String avatarName = null;
+        SharedPreferences pre = getContext().getSharedPreferences("userInfo",MODE_PRIVATE);
+        if(pre.getString("login_role","").equals("student")){
+            avatarName = pre.getString("sno","") + ".jpg";
+        }else avatarName = pre.getString("ano","") + ".jpg";
+
+        RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true).fallback(R.mipmap.app_icon)
+                .error(R.drawable.error).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop();
+        Glide.with(getActivity()).load(Utils.AVATAR_PATH + avatarName)
+                .thumbnail(Glide.with(getActivity()).load(R.drawable.loading))
+                .apply(requestOptions).into(myAvatar);
     }
 
     //其他操作
@@ -73,13 +115,30 @@ public class MyselfFragment extends Fragment {
         //当登录角色为管理员时，将个人页的预约考试换为成绩管理，包括图标和文字
         if(pre.getString("login_role","").equals("admin")){
             itemThirdImage.setImageDrawable(getContext().getResources().getDrawable(R.drawable.item_grade));
-            itemThirdText.setText("成绩管理");
+            itemThirdText.setText("消息管理");
         }
 
         //获取用户的昵称和简介并展示
         myNickname.setText(pre.getString("nickname",""));
         introductionText.setText(pre.getString("introduction",""));
 
+        getProverb();
+
+    }
+
+
+    //获取谚语
+    private void getProverb() {
+
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("adminController","getProverb");
+                Message message = new Message();
+                message.obj = result;
+                proverbHandler.sendMessage(message);
+            }
+        }.start();
 
     }
 
@@ -143,11 +202,18 @@ public class MyselfFragment extends Fragment {
                     break;
                 case R.id.item_detail_layout:
                     Intent intent2 = new Intent();
+                    if (getContext().getSharedPreferences("userInfo", MODE_PRIVATE).getString("login_role","").equals("student"))
+                        intent2.setAction("student");
+                    else intent2.setAction("admin");
                     intent2.setClass(getContext(), MyDetailActivity.class);
                     startActivity(intent2);
                     break;
                 case R.id.item_reserve_layout:
                     Intent intent3 = new Intent();
+                    if (getContext().getSharedPreferences("userInfo", MODE_PRIVATE).getString("login_role","").equals("student"))
+                        intent3.setClass(getContext(), ReserveExamActivity.class);
+                    else intent3.setClass(getContext(), ManageNewsActivity.class);
+                    startActivity(intent3);
                     break;
                 case R.id.item_setting_layout:
                     Intent intent4 = new Intent();
@@ -213,5 +279,8 @@ public class MyselfFragment extends Fragment {
         SharedPreferences pre = getContext().getSharedPreferences("userInfo",MODE_PRIVATE);
         introductionText.setText(pre.getString("introduction",""));
         myNickname.setText(pre.getString("nickname",""));
+
+        getAvatar();
     }
+
 }

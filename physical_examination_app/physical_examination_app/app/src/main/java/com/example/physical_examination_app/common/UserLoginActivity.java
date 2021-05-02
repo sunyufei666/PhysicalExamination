@@ -27,9 +27,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class UserLoginActivity extends AppCompatActivity {
 
@@ -43,14 +54,14 @@ public class UserLoginActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             String result = msg.obj + "";
+            SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
+            SharedPreferences.Editor editor = pre.edit();
             if(result.equals("fail") || result==null){
                 Toast.makeText(getApplicationContext(),"登录失败，请输入正确的信息！",Toast.LENGTH_SHORT).show();
             }else{
                 try {
                     JSONArray jsonArray = new JSONArray(result);
                     JSONObject json = jsonArray.getJSONObject(0);
-                    SharedPreferences pre = getSharedPreferences("userInfo",MODE_PRIVATE);
-                    SharedPreferences.Editor editor = pre.edit();
                     Intent intent = new Intent();
                     Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
                     if(role.equals("student")){
@@ -72,6 +83,12 @@ public class UserLoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }else if(role.equals("admin")){
+                        editor.putString("id",json.getString("id"));
+                        editor.putString("ano",json.getString("ano"));
+                        editor.putString("nickname",json.getString("nickname"));
+                        editor.putString("introduction",json.getString("introduction"));
+                        editor.putString("login_role","admin");
+                        editor.commit();
                         intent.setClass(getApplicationContext(), AdminMainActivity.class);
                         startActivity(intent);
                         finish();
@@ -102,44 +119,49 @@ public class UserLoginActivity extends AppCompatActivity {
 
     //根据传过来的action值改变视图的内容
     private void setViewsAndGetResult() {
-        SpannableString hintString;
+
         if(role.equals("student")){
             //动态设置hint的值
-            hintString = new SpannableString("学号");
+            SpannableString hintString = new SpannableString("学号");
+            userName.setHint(hintString);
             //动态设置输入框上的图片
             userImage.setImageResource(R.mipmap.student_login);
-
-            loginButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //创建线程访问后台，返回登录结果
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            String md5Password = null;
-                            try {
-                                MessageDigest md = MessageDigest.getInstance("MD5");
-                                md.update(userPassword.getText().toString().getBytes());
-                                md5Password = new BigInteger(1, md.digest()).toString(16);
-                            } catch (NoSuchAlgorithmException e) {
-                                e.printStackTrace();
-                            }
-
-                            String result = new Utils().getConnectionResult("loginController","userLogin",
-                                    "username=" + userName.getText().toString() +
-                                            "&&password=" + md5Password + "&&role="+role);
-                            Message message = new Message();
-                            message.obj = result;
-                            loginHandler.sendMessage(message);
-                        }
-                    }.start();
-                }
-            });
-
         }else if(role.equals("admin")){
-            hintString = new SpannableString("账号");
             userImage.setImageResource(R.mipmap.admin_login);
         }
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLoginResult();
+            }
+        });
+
+    }
+
+    //获取登录结果
+    private void getLoginResult(){
+        //创建线程访问后台，返回登录结果
+        new Thread(){
+            @Override
+            public void run() {
+                String md5Password = null;
+                try {
+                    MessageDigest md = MessageDigest.getInstance("MD5");
+                    md.update(userPassword.getText().toString().getBytes());
+                    md5Password = new BigInteger(1, md.digest()).toString(16);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+
+                String result = new Utils().getConnectionResult("loginController","userLogin",
+                        "username=" + userName.getText().toString() +
+                                "&&password=" + md5Password + "&&role="+role);
+                Message message = new Message();
+                message.obj = result;
+                loginHandler.sendMessage(message);
+            }
+        }.start();
     }
 
     //获取视图控件

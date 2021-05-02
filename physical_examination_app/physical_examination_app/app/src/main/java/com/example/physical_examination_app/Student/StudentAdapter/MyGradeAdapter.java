@@ -22,6 +22,7 @@ public class MyGradeAdapter extends BaseAdapter {
     private TextView gradeLocation;
     private TextView gradeEvent;
     private TextView gradeStatus;
+    private TextView gradeTeacher;
     private TextView gradeDate;
 
     private LinearLayout gradeBackground;
@@ -59,7 +60,8 @@ public class MyGradeAdapter extends BaseAdapter {
         String location = item.get("location");
         gradeLocation.setText(location);
         gradeStatus.setText(item.get("status"));
-        gradeEvent.setText("项目："+item.get("event"));
+        gradeEvent.setText("项目："+item.get("event").substring(0,30)+"......");
+        gradeTeacher.setText("负责教师："+item.get("teacher"));
         gradeDate.setText("考试日期："+item.get("date"));
 
         if(position%3==1){
@@ -75,6 +77,7 @@ public class MyGradeAdapter extends BaseAdapter {
     private void getViews(View view) {
 
         gradeLocation = view.findViewById(R.id.grade_location);
+        gradeTeacher = view.findViewById(R.id.grade_teacher);
         gradeStatus = view.findViewById(R.id.grade_status);
         gradeEvent = view.findViewById(R.id.grade_event);
         gradeDate = view.findViewById(R.id.grade_date);

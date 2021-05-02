@@ -24,8 +24,9 @@ public class Utils {
 
     private String result;
     private Bitmap bitmapResult;
-    public static final String ip = "192.168.2.178";
+    public static final String ip = "192.168.137.1";
     public static final String project = "physical_examination";
+    public static final String AVATAR_PATH = "http://" + ip + ":8080/" + project + "/avatar/";
 
     //不需要参数的数据传输
     public String getConnectionResult(String controller, String method){

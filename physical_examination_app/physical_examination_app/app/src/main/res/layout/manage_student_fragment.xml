@@ -26,21 +26,49 @@
                 android:gravity="center"/>
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:background="@drawable/search_style"
         android:layout_width="375dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="5dp"
         android:layout_gravity="center_horizontal">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/search"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+        </LinearLayout>
         <EditText
+            android:id="@+id/student_search"
+            android:layout_marginLeft="45dp"
             android:textCursorDrawable="@drawable/app_cursor_style"
             android:background="@null"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="搜索"
-            android:gravity="center" />
-    </LinearLayout>
+            android:hint="搜索" />
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginLeft="260dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:background="#cdcdcd"
+                android:layout_width="2dp"
+                android:layout_height="20dp"/>
+        </LinearLayout>
+        <Spinner
+            android:layout_marginLeft="270dp"
+            android:gravity="right"
+            android:id="@+id/search_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:entries="@array/student_type"/>
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

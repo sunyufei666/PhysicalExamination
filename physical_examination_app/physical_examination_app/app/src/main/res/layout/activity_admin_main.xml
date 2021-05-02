@@ -66,6 +66,7 @@
 
             <TextView
                 android:id="@+id/manage_student_text"
+                android:textColor="#bfbfbf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="管理学生" />
@@ -89,6 +90,7 @@
 
             <TextView
                 android:id="@+id/manager_myself_text"
+                android:textColor="#bfbfbf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="个人信息"/>

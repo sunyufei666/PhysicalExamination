@@ -23,7 +23,9 @@ public class ManageExamAdapter extends BaseAdapter {
     private TextView examLocation;
     private TextView examPeople;
     private TextView examEvent;
+    private TextView examTeacher;
     private TextView releaseDate;
+
     private LinearLayout examBackground;
 
     public ManageExamAdapter(Context context, List<Map<String,String>> dataSource,int item_layout){
@@ -58,6 +60,10 @@ public class ManageExamAdapter extends BaseAdapter {
         Map<String, String> item = dataSource.get(position);
         String location = item.get("location");
         examLocation.setText(location);
+        examPeople.setText("人数："+item.get("people"));
+        examEvent.setText(item.get("event").substring(0,30)+"......");
+        examTeacher.setText("负责教师："+item.get("teacher"));
+        releaseDate.setText("发布日期："+item.get("public_date"));
         if(location.equals("东操场")){
             examBackground.setBackground(context.getResources().getDrawable(R.drawable.ground2));
         }
@@ -70,6 +76,7 @@ public class ManageExamAdapter extends BaseAdapter {
     private void getViews(View view) {
 
         examLocation = view.findViewById(R.id.exam_location);
+        examTeacher = view.findViewById(R.id.exam_teacher);
         examPeople = view.findViewById(R.id.exam_people);
         examEvent = view.findViewById(R.id.exam_event);
         releaseDate = view.findViewById(R.id.release_date);

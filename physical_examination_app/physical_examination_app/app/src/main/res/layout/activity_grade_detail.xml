@@ -25,7 +25,7 @@
             android:gravity="center"
             android:textSize="20dp"
             android:textColor="#FFFFFF"
-            android:text="考试信息"
+            android:text="成绩信息"
             android:textStyle="bold"
             android:layout_weight="5"
             android:layout_width="0dp"
@@ -75,13 +75,39 @@
             android:layout_marginLeft="20dp"
             android:gravity="left"
             android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="负责教师"
+            android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/grade_teacher"
+            android:layout_marginRight="25dp"
+            android:textSize="12dp"
+            android:gravity="right"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="张老师"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="1dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:layout_gravity="center"
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="考试日期"
             android:textSize="15dp"/>
         <TextView
-            android:id="@+id/exam_date"
+            android:id="@+id/grade_date"
             android:layout_marginRight="25dp"
             android:textSize="12dp"
             android:gravity="right"
@@ -150,6 +176,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
         <TextView
+            android:id="@+id/long_run_name"
             android:layout_marginLeft="20dp"
             android:gravity="left"
             android:layout_gravity="center"
@@ -159,7 +186,7 @@
             android:text="1000米跑"
             android:textSize="15dp"/>
         <TextView
-            android:id="@+id/thousand_run"
+            android:id="@+id/long_run"
             android:layout_marginRight="25dp"
             android:textSize="12dp"
             android:gravity="right"
@@ -176,6 +203,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
         <TextView
+            android:id="@+id/extra_event_name"
             android:layout_marginLeft="20dp"
             android:gravity="left"
             android:layout_gravity="center"
@@ -185,7 +213,7 @@
             android:text="引体向上"
             android:textSize="15dp"/>
         <TextView
-            android:id="@+id/pull_ups"
+            android:id="@+id/extra_event"
             android:layout_marginRight="25dp"
             android:textSize="12dp"
             android:gravity="right"

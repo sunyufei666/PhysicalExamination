@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), AdminMainActivity.class);
+                intent.setClass(getApplicationContext(), UserLoginActivity.class);
                 intent.setAction("admin");
                 startActivity(intent);
             }

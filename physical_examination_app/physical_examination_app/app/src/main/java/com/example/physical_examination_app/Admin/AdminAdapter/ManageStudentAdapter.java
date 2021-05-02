@@ -55,8 +55,12 @@ public class ManageStudentAdapter extends BaseAdapter {
         getViews(convertView);
 
         Map<String, String> item = dataSource.get(position);
-        studentName.setText(item.get("student_name"));
-
+        studentName.setText(item.get("name"));
+        collegeName.setText(item.get("college"));
+        professionName.setText(item.get("profession"));
+        introductionText.setText(item.get("introduction"));
+        gradeAndClass.setText(item.get("grade")+"级"+item.get("class")+"班");
+        studentId.setText(item.get("sno"));
         return convertView;
     }
 

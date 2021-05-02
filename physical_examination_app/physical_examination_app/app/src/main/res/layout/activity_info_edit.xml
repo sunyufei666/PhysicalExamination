@@ -101,6 +101,41 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/item_confirm_layout"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="18dp"
+            android:textColor="#000000"
+            android:paddingLeft="20dp"
+            android:text="确认"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/edit_password_confirm"
+            android:hint="在此重新确认密码"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/warning_text"
+        android:visibility="invisible"
+        android:textSize="16dp"
+        android:gravity="center"
+        android:textColor="#DC143C"
+        android:text="两次输入的密码应一致"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
         android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="horizontal"

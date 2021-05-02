@@ -3,16 +3,42 @@
     <string name="ip_address">192.168.137.1</string>
     <string-array name="exam_type">
         <item>按场地</item>
-        <item>按时间</item>
-        <item>完成度</item>
+        <item>是否完成</item>
+        <item>发布时间</item>
     </string-array>
     <string-array name="grade_type">
         <item>按场地</item>
+        <item>按教师</item>
         <item>是否通过</item>
-        <item>通过时间</item>
+        <item>考试时间</item>
     </string-array>
     <string-array name="exam_ground">
         <item>西操场</item>
         <item>东操场</item>
+    </string-array>
+    <string-array name="manage_exam_type">
+        <item>按场地</item>
+        <item>按教师</item>
+        <item>发布时间</item>
+    </string-array>
+    <string-array name="student_type">
+        <item>按姓名</item>
+        <item>按学号</item>
+        <item>按年级</item>
+        <item>按班级</item>
+        <item>按学院</item>
+        <item>按专业</item>
+    </string-array>
+    <string-array name="location_type">
+        <item>东操场</item>
+        <item>西操场</item>
+    </string-array>
+    <string-array name="student_sex_type">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string-array name="pass_type">
+        <item>未通过</item>
+        <item>已通过</item>
     </string-array>
 </resources>

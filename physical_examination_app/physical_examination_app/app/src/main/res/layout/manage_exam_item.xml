@@ -53,6 +53,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/exam_teacher"
+            android:text="负责教师：张老师"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
             android:id="@+id/release_date"
             android:gravity="right"
             android:text="发布日期：2020年12月12日"

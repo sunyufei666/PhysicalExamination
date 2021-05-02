@@ -6,18 +6,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.physical_examination_app.R;
 import com.example.physical_examination_app.Utils;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class InfoEditActivity extends AppCompatActivity {
 
@@ -27,6 +37,10 @@ public class InfoEditActivity extends AppCompatActivity {
     private EditText editParam;
     private Button saveButton;
     private Button finishButton;
+
+    private LinearLayout itemConfirmLayout;
+    private TextView warningText;
+    private EditText editPasswordParam;
 
     private String action;
 
@@ -76,6 +90,8 @@ public class InfoEditActivity extends AppCompatActivity {
             case "简介修改":
                 action = "introduction";
                 intentParam.setText(pre.getString("introduction",""));
+                itemConfirmLayout.setVisibility(View.GONE);
+                warningText.setVisibility(View.GONE);
                 break;
             case "密码修改":
                 action = "password";
@@ -84,6 +100,8 @@ public class InfoEditActivity extends AppCompatActivity {
             case "昵称修改":
                 action = "nickname";
                 intentParam.setText(pre.getString("nickname",""));
+                itemConfirmLayout.setVisibility(View.GONE);
+                warningText.setVisibility(View.GONE);
                 break;
         }
 
@@ -93,6 +111,7 @@ public class InfoEditActivity extends AppCompatActivity {
     private void setListener() {
 
         returnButton.setOnClickListener(customListener);
+        editPasswordParam.addTextChangedListener(customListener);
         saveButton.setOnClickListener(customListener);
         finishButton.setOnClickListener(customListener);
 
@@ -108,10 +127,15 @@ public class InfoEditActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.save_button);
         finishButton = findViewById(R.id.finish_button);
 
+        itemConfirmLayout = findViewById(R.id.item_confirm_layout);
+
+        warningText = findViewById(R.id.warning_text);
+        editPasswordParam = findViewById(R.id.edit_password_confirm);
+
     }
 
     //自定义监听器
-    class CustomListener implements View.OnClickListener{
+    class CustomListener implements View.OnClickListener, TextWatcher {
 
         @Override
         public void onClick(View v) {
@@ -125,12 +149,27 @@ public class InfoEditActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             String editParamString = editParam.getText().toString();
-                            if (editParamString.equals("")){
+                            if (getIntent().getAction().equals("密码修改")){
+                                try {
+                                    MessageDigest md = MessageDigest.getInstance("MD5");
+                                    md.update(editParamString.getBytes());
+                                    editParamString = new BigInteger(1, md.digest()).toString(16);
+                                } catch (NoSuchAlgorithmException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            if (editParamString.equals("") || editPasswordParam.getText().toString().equals("")){
+                                Looper.prepare();
                                 Toast.makeText(getApplicationContext(),"请输入修改内容！",Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            }else if(getIntent().getAction().equals("密码修改") && ! editParam.getText().toString().equals(editPasswordParam.getText().toString())){
+                                Looper.prepare();
+                                Toast.makeText(getApplicationContext(),"两次输入的密码应一致！",Toast.LENGTH_SHORT).show();
+                                Looper.loop();
                             }else {
                                 SharedPreferences pre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                                 String params = "sno="+pre.getString("sno","")+"&&"+"type="+action+"&&"+"param="+editParamString;
-                                String result = new Utils().getConnectionResult("studentInformationController","editInformation",params);
+                                String result = new Utils().getConnectionResult("studentController","editInformation",params);
                                 Message message = new Message();
                                 message.obj = result;
                                 infoEditHandler.sendMessage(message);
@@ -145,6 +184,31 @@ public class InfoEditActivity extends AppCompatActivity {
 
         }
 
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String editParamText = editParam.getText().toString();
+            String editPasswordParamText = editPasswordParam.getText().toString();
+            if(! editParamText.equals(editPasswordParamText) && ! editPasswordParamText.equals("")){
+                warningText.setText("两次输入的密码应一致");
+                warningText.setTextColor(Color.parseColor("#DC143C"));
+                warningText.setVisibility(View.VISIBLE);
+            }else if(editPasswordParamText.equals("")){
+                warningText.setVisibility(View.INVISIBLE);
+            }else {
+                warningText.setText("两次密码输入一致");
+                warningText.setTextColor(Color.parseColor("#00FF00"));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
     }
 
 }

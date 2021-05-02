@@ -22,6 +22,7 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/arrow_left"/>
         <TextView
+            android:id="@+id/bar_title"
             android:gravity="center"
             android:textSize="20dp"
             android:textColor="#FFFFFF"
@@ -78,6 +79,32 @@
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="负责老师"
+            android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/exam_teacher"
+            android:layout_marginRight="25dp"
+            android:textSize="12dp"
+            android:gravity="right"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="张三"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:text="当前人数/总容量"
             android:textSize="15dp"/>
         <TextView
@@ -92,6 +119,7 @@
             android:text="60/80"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/item_status_layout"
         android:layout_marginTop="2dp"
         android:background="#FFFFFF"
         android:orientation="horizontal"
@@ -131,6 +159,33 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="发布日期"
+            android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_marginRight="25dp"
+            android:textSize="12dp"
+            android:gravity="right"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="2020年12月12日"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/item_exam_layout"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="考试日期"
             android:textSize="15dp"/>
         <TextView
             android:id="@+id/exam_date"
@@ -185,5 +240,31 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="380dp"
             android:layout_height="170dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/item_button_layout"
+        android:visibility="invisible"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/finish_button"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:background="#FFFFFF"
+            android:text="返回"
+            android:layout_width="150dp"
+            android:layout_height="50dp"/>
+        <Button
+            android:id="@+id/reserve_button"
+            android:layout_marginLeft="50dp"
+            android:textSize="15dp"
+            android:textColor="#FFFFFF"
+            android:background="#06c8fb"
+            android:text="预约"
+            android:layout_width="150dp"
+            android:layout_height="50dp"/>
     </LinearLayout>
 </LinearLayout>
