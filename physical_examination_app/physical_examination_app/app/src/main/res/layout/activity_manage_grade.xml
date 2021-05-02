@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <LinearLayout
+        android:layout_alignParentTop="true"
+        android:elevation="10dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="25dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="#06c8fb"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <ImageView
+            android:id="@+id/return_button"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/arrow_left"/>
+        <TextView
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:text="修改学生成绩信息"
+            android:textStyle="bold"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"/>
+        <ImageView
+            android:id="@+id/icon_album"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/student_grade_list"
+        android:divider="@null"
+        android:background="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
