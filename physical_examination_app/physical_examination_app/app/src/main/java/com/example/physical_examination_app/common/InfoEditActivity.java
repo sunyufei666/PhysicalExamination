@@ -158,11 +158,16 @@ public class InfoEditActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }
-                            if (editParamString.equals("") || editPasswordParam.getText().toString().equals("")){
+                            if (editParamString.equals("")){
                                 Looper.prepare();
                                 Toast.makeText(getApplicationContext(),"请输入修改内容！",Toast.LENGTH_SHORT).show();
                                 Looper.loop();
-                            }else if(getIntent().getAction().equals("密码修改") && ! editParam.getText().toString().equals(editPasswordParam.getText().toString())){
+                            }else if(!editParamString.equals("") && (editPasswordParam.getText().toString().equals("")
+                                    && getIntent().getAction().equals("密码修改"))){
+                                Looper.prepare();
+                                Toast.makeText(getApplicationContext(),"请输入修改内容！",Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            } else if(getIntent().getAction().equals("密码修改") && ! editParam.getText().toString().equals(editPasswordParam.getText().toString())){
                                 Looper.prepare();
                                 Toast.makeText(getApplicationContext(),"两次输入的密码应一致！",Toast.LENGTH_SHORT).show();
                                 Looper.loop();
